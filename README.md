@@ -5,16 +5,16 @@
 
 
 <h4 align="center">
-    LLM Application Framework as a Specification
+    Build complex LLM Applications with Python Dictionary
 </h4>
 
 ---
 
-# LangDictg
+# LangDict
 
-LangDict is a framework for building agents (Compound AI Systems) using only specifications in a Python `dictionary`. The framework is simple and intuitive to use for production.
+LangDict is a framework for building agents (Compound AI Systems) using only specifications in a Python `Dictionary`. The framework is simple and intuitive to use for production.
 
-Building an LLM Application means, in the extreme, adding LLM API calls. In comparison, many frameworks provide complex functionality. LangDict was created with the design philosophy that building LLM applications should be as simple as possible. Build your own LLM Application with minimal understanding of the framework.
+The prompts are similar to a feature specification, which is all you need to build an LLM Module. LangDict was created with the design philosophy that building LLM applications should be as simple as possible. Build your own LLM Application with minimal understanding of the framework.
 
 <p align="center">
     <img src="https://github.com/LangDict/langdict/blob/main/images/module.png" style="inline" width=800>
@@ -23,7 +23,7 @@ Building an LLM Application means, in the extreme, adding LLM API calls. In comp
 An Agent can be built by connecting multiple Modules. At LangDict, we focus on the intuitive interface, modularity, extensibility, and reusability of [PyTorch](https://github.com/pytorch/pytorch)'s `nn.Module`. If you have experience developing Neural Networks with PyTorch, you will understand how to use it right away.
 
 
-## Features
+## Key Features
 
 <details>
   <summary>LLM Applicaiton framework for simple, intuitive, specification-based development</summary>
@@ -116,6 +116,17 @@ rag.trace(backend="langfuse")
 
 </details>
 
+<details>
+  <summary>Easy to change hyper-paramters (Prompt, Paramter)</summary>
+
+```python
+rag = RAG()
+rag.save_json("rag.json")
+# Modify "rag.json" file
+rag.load_json("rag.json")
+```
+</details>
+
 
 ## Quick Start
 
@@ -196,6 +207,7 @@ rag(inputs)
 - Streaming
 
 ```python
+rag = RAG()
 # Stream
 for token in rag(inputs, stream=True):
     print(f"token > {token}")
@@ -215,8 +227,17 @@ token > 4
 - Get observability with a single line of code.
 
 ```python
+rag = RAG()
 # Trace
 rag.trace(backend="langfuse")
+```
+
+- Save and load the module as a JSON file.
+
+```python
+rag = RAG()
+rag.save_json("rag.json")
+rag.load_json("rag.json")
 ```
 
 ## Dependencies

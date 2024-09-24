@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "langdict"
-version = "0.0.1"
-description = "The Simplest LLM Application Framework"
+version = "0.0.2"
+description = "Build complex LLM Applications with Python Dictionary"
 
 readme = "README.md"
 requires-python = ">=3.9,<4.0"

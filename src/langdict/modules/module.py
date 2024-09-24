@@ -181,21 +181,19 @@ class Module:
         Args:
             filename (str): The filename to save the module to.
         """
-        all_parameters = {}
-        for name, param in self._parameters.items():
-            all_parameters[name] = param.value
-
         all_modules = {}
         for module in self.children():
-            all_modules[module.NAME] = module.as_dict()
+            parameters = {}
+            for name, p in module._parameters.items():
+                parameters[name] = p.value
 
-        data = {
-            "parameters": all_parameters,
-            "modules": all_modules,
-        }
+            all_modules[module.NAME] = {
+                "module": module.as_dict(),
+                "parameters": parameters,
+            }
 
         with open(filename, "w") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+            json.dump(all_modules, f, ensure_ascii=False, indent=4)
 
     def load_json(self, filename: str) -> T:
         """Load the module from a json file.
@@ -216,6 +214,12 @@ class Module:
             self.__setattr__(name, Parameter(value))
 
         for module in self.children():
+            module_data = data.get(module.NAME, {})
+
+            parameter_data = module_data.get("parameters", {})
+            for name, value in parameter_data.items():
+                module.__setattr__(name, Parameter(value))
+
             langdict_data = module_data.get(module.NAME)
             if not langdict_data:
                 continue

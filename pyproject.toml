@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langdict"
+version = "0.0.1"
+description = "The Simplest LLM Application Framework"
+
+readme = "README.md"
+requires-python = ">=3.9,<4.0"
+license = {file = "LICENSE"}
+
+keywords = ["LLM", "RAG", "Agent", "Compund AI Systems", "LangDict"]
+
+authors = [
+  {name = "Dongjun Lee", email = "djlee.hb@gmail.com"},
+]
+maintainers = [
+  {name = "Dongjun Lee", email = "djlee.hb@gmail.com"},
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+
+  "License :: OSI Approved :: MIT License",
+
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
+
+[project.optional-dependencies]
+dev = []
+test = ["pytest"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests", "tests.*", "examples", "*.ipynb", "*.json"]
+
+[project.urls]
+Homepage = "https://langdict.github.io/"
+Documentation = "https://langdict.github.io/docs"
+Repository = "https://github.com/LangDict/langdict.git"
+"Bug Tracker" = "https://github.com/LangDict/langdict/issues"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]

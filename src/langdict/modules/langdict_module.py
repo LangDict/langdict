@@ -10,7 +10,7 @@ class LangDictModule(Module):
     """LangDictModule: A module wrapper for LangDict."""
 
     def __init__(self, lang_dict: LangDict):
-        super(LangDictModule, self).__init__()
+        super().__init__()
         self.lang_dict = lang_dict
 
     def __call__(
@@ -26,14 +26,21 @@ class LangDictModule(Module):
         ):
             stream = True
 
+        inputs = self.forward(*args, **kwargs)
+
         return self.lang_dict(
-            *args,
+            inputs,
             stream=stream,
             batch=batch,
             trace_backend=self.trace_backend,
             module_name=self._get_name(),
-            **kwargs,
         )
+
+    def forward(self, *args, **kwargs) -> Dict[str, Any]:
+        if type(args[0]) is dict:
+            return args[0]
+        else:
+            raise ValueError("Invalid inputs type. Expected dict.")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "LangDictModule":

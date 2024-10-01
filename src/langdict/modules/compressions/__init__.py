@@ -1,7 +1,7 @@
 
-from langdict.modules.compressions.llm_lingua2 import LLMLingua2
+from langdict.modules.compressions.llm_lingua2 import TextCompressor
 
 
 __all__ = [
-    LLMLingua2,
+    TextCompressor,
 ]

@@ -30,7 +30,7 @@ The compressed text is:"""),
 }
 
 
-class LLMLingua2(LangDictModule):
+class TextCompressor(LangDictModule):
 
     def __init__(self):
         super().__init__(

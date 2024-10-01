@@ -3,7 +3,6 @@ from typing import Any, Dict, List
 from langdict import LangDict, LangDictModule
 
 
-# https://arxiv.org/abs/2304.09542
 _SPECIFICATION = {
     "messages": [
         ("system", "You are RankGPT, an intelligent assistant that can rank passages based on their relevancy to the query."),
@@ -20,6 +19,9 @@ Only response the ranking results, do not say any word or explain."""),
     },
     "output": {
         "type": "json"
+    },
+    "metadata": {
+        "arxiv": "https://arxiv.org/abs/2304.09542",
     }
 }
 

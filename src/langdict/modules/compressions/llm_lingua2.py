@@ -31,6 +31,11 @@ The compressed text is:"""),
 
 
 class TextCompressor(LangDictModule):
+    """
+    LLMLingua-2: Data Distillation for Efficient and Faithful Task-Agnostic Prompt Compression
+
+    Step 1: Data Distillation
+    """
 
     def __init__(self):
         super().__init__(

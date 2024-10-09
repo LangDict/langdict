@@ -27,6 +27,9 @@ Only response the ranking results, do not say any word or explain."""),
 
 
 class RankGPT(LangDictModule):
+    """
+    Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agents
+    """
 
     def __init__(self):
         super().__init__(

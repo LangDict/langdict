@@ -23,6 +23,15 @@ The prompts are similar to a feature specification, which is all you need to bui
 An Agent can be built by connecting multiple Modules. At LangDict, we focus on the intuitive interface, modularity, extensibility, and reusability of [PyTorch](https://github.com/pytorch/pytorch)'s `nn.Module`. If you have experience developing Neural Networks with PyTorch, you will understand how to use it right away.
 
 
+## Modules
+
+| Task | Name | Code |
+| ---- | ---- | ---- |
+| `Ranking` | RankGPT | [Code](https://github.com/LangDict/langdict/blob/main/src/langdict/modules/rankings/rank_gpt.py) |
+| `Compression` | TextCompressor (LLMLingua-2) | [Code](https://github.com/LangDict/langdict/blob/main/src/langdict/modules/compressions/llm_lingua2.py) |
+| `RAG` | SELF-RAG | [Code](https://github.com/LangDict/langdict/blob/main/src/langdict/modules/rags/self_rag/__init__.py) |
+
+
 ## Key Features
 
 <details>
@@ -84,7 +93,7 @@ class RAG(Module):
     def __init__(self, docs: List[str]):
         super().__init__()
         self.query_rewrite = LangDictModule.from_dict({ ... })  # Module
-        self.search = SimpleKeywordSearch(docs=docs)  # Module
+        self.search = Retriever(docs=docs)  # Module
         self.answer = LangDictModule.from_dict({ ... })  # Module
 
     def forward(self, inputs: Dict):
@@ -101,7 +110,7 @@ class RAG(Module):
 </details>
 
 <details>
-  <summary>Easy to change trace options (Console, Langfuse)</summary>
+  <summary>Easy to change trace options (Console, Langfuse, LangSmith)</summary>
 
 ```python
 # Apply Trace option to all modules
@@ -130,7 +139,6 @@ rag.load_json("rag.json")
 ```
 </details>
 
-
 ## Quick Start
 
 Install LangDict:
@@ -141,14 +149,14 @@ $ pip install langdict
 
 ### Example
 
-**Chitchat** (`LangDict`)
+**LangDict**
 - Build LLM Module with the specification.
 
 ```python
 from langdict import LangDict
 
 
-chitchat_spec = {
+_SPECIFICATION = {
     "messages": [
         ("system", "You are a helpful AI bot. Your name is {name}."),
         ("human", "Hello, how are you doing?"),
@@ -163,7 +171,7 @@ chitchat_spec = {
         "type": "string"
     }
 }
-chitchat = LangDict.from_dict(chitchat_spec)
+chitchat = LangDict.from_dict(_SPECIFICATION)
 chitchat({
     "name": "LangDict",
     "user_input": "What is your name?"
@@ -171,7 +179,7 @@ chitchat({
 >>> 'My name is LangDict. How can I assist you today?'
 ```
 
-**RAGAgent** (`Module`, `LangDictModule`)
+**Module**
 - Build a agent by connecting multiple modules.
 
 ```python
@@ -180,13 +188,17 @@ from typing import Any, Dict, List
 from langdict import Module, LangDictModule
 
 
+_QUERY_REWRITE_SPECIFICATION = { ... }
+_ANSWER_SPECIFICATIOn = { ... }
+
+
 class RAG(Module):
 
     def __init__(self, docs: List[str]):
         super().__init__()  
-        self.query_rewrite = LangDictModule.from_dict(query_rewrite_spec)
+        self.query_rewrite = LangDictModule.from_dict(_QUERY_REWRITE_SPECIFICATION)
         self.search = SimpleRetriever(docs=docs)  # Module
-        self.answer = LangDictModule.from_dict(answer_spec)
+        self.answer = LangDictModule.from_dict(_ANSWER_SPECIFICATIOn)
 
     def forward(self, inputs: Dict[str, Any]):
         query_rewrite_result = self.query_rewrite({
@@ -232,7 +244,7 @@ token > 4
 ```python
 rag = RAG()
 # Trace
-rag.trace(backend="langfuse")
+rag.trace(backend="console")
 ```
 
 - Save and load the module as a JSON file.

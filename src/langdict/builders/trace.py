@@ -36,5 +36,17 @@ class TraceCallbackBuilder(Builder):
                 session_id=session_id,
                 user_id=user_id,
             )
+        elif backend == TraceBackend.LANGSMITH:
+            try:
+                from langchain_core.tracers import LangChainTracer
+            except ImportError:
+                raise ModuleNotFoundError("LangChainTracer is not installed.")
+
+            tags.append(module_name)
+
+            return LangChainTracer(
+                example_id=session_id,
+                tags=tags,
+            )
         else:
             raise ValueError(f"Backend {backend} is not supported")

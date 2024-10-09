@@ -112,6 +112,9 @@ rag.trace(backend="console")
 
 # Langfuse
 rag.trace(backend="langfuse")
+
+# LangSmith
+rag.trace(backend="langsmith")
 ```
 
 </details>

@@ -189,7 +189,7 @@ from langdict import Module, LangDictModule
 
 
 _QUERY_REWRITE_SPECIFICATION = { ... }
-_ANSWER_SPECIFICATIOn = { ... }
+_ANSWER_SPECIFICATION = { ... }
 
 
 class RAG(Module):
@@ -198,7 +198,7 @@ class RAG(Module):
         super().__init__()  
         self.query_rewrite = LangDictModule.from_dict(_QUERY_REWRITE_SPECIFICATION)
         self.search = SimpleRetriever(docs=docs)  # Module
-        self.answer = LangDictModule.from_dict(_ANSWER_SPECIFICATIOn)
+        self.answer = LangDictModule.from_dict(_ANSWER_SPECIFICATION)
 
     def forward(self, inputs: Dict[str, Any]):
         query_rewrite_result = self.query_rewrite({
